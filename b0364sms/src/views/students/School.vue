@@ -5,66 +5,51 @@
     </div>
     <el-table :data="schools" height="380" border style="width: 100%">
       <el-table-column type="index" label="序号" width="80"> </el-table-column>
-      <el-table-column prop="schoolname" label="活动姓名"> </el-table-column>
+      <el-table-column prop="schoolname" label="活动名称"> </el-table-column>
+      <el-table-column prop="schooltitle" label="活动主题"> </el-table-column>
+      <el-table-column prop="schoolplace" label="活动地点"> </el-table-column>
+      <el-table-column prop="schooltime" label="活动时间"> </el-table-column>
+      <el-table-column prop="schoolprincipal" label="负责人"> </el-table-column>
       <el-table-column label="操作" width="250">
         <template slot-scope="scope">
-          <el-button @click="handleEdit(scope.row._id)" size="small"
-            >编辑</el-button
-          >
-          <el-button
-            @click="handleDelete(scope.row._id)"
-            type="danger"
-            size="small"
-            >删除</el-button
-          >
+          <el-button @click="handleEdit(scope.row._id)" size="small">编辑</el-button>
+          <el-button @click="handleDelete(scope.row._id)" type="danger" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <!-- 添加活动弹窗 -->
-    <el-dialog
-      title="添加/编辑活动"
-      :visible.sync="schoolFormVisible"
-      width="500px"
-    >
-      <el-form
-        :model="school"
-        status-icon
-        ref="schoolForm"
-        label-width="100px"
-        label-position="right"
-        style="width: 400px"
-        :rules="rules"
-      >
+    <el-dialog title="添加/编辑活动" :visible.sync="schoolFormVisible" width="500px">
+      <el-form :model="school" status-icon ref="schoolForm" label-width="100px" label-position="right"
+        style="width: 400px" :rules="rules">
         <el-form-item label="活动名称" prop="schoolname">
-          <el-input
-            v-model="school.schoolname"
-            placeholder="请输入活动名称"
-          ></el-input>
+          <el-input v-model="school.schoolname" placeholder="请输入活动名称"></el-input>
+        </el-form-item>
+        <el-form-item label="活动主题" prop="schooltitle">
+          <el-input v-model="school.schooltitle" placeholder="请输入活动主题"></el-input>
+        </el-form-item>
+        <el-form-item label="活动地点" prop="schoolplace">
+          <el-input v-model="school.schoolplace" placeholder="请输入活动地点"></el-input>
+        </el-form-item>
+        <el-form-item label="活动时间" prop="schooltime">
+          <el-input v-model="school.schooltime" placeholder="请输入活动时间"></el-input>
+        </el-form-item>
+        <el-form-item label="负责人" prop="schoolprincipal">
+          <el-input v-model="school.schoolprincipal" placeholder="请输入负责人"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="schoolFormVisible = false">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="
-            school._id === null
-              ? addData('schoolForm')
-              : updateData('schoolForm')
-          "
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="
+          school._id === null
+            ? addData('schoolForm')
+            : updateData('schoolForm')
+        ">确 定</el-button>
       </div>
     </el-dialog>
     <!-- 分页控件 -->
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[5, 10, 15, 20]"
-      :page-size="pageSize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
-    >
+    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+      :page-sizes="[5, 10, 15, 20]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
     </el-pagination>
   </div>
 </template>
@@ -83,12 +68,44 @@ export default {
       school: {
         _id: null,
         schoolname: "",
+        schooltitle: "",
+        schoolplace: "",
+        schooltime: "",
+        schoolprincipal: "",
       },
       rules: {
         schoolname: [
           {
             required: true,
             message: "活动名称必须输入",
+            trigger: ["blur", "change"],
+          },
+        ],
+        schooltitle: [
+          {
+            required: true,
+            message: "活动主题必须输入",
+            trigger: ["blur", "change"],
+          },
+        ],
+        schoolplace: [
+          {
+            required: true,
+            message: "活动地点必须输入",
+            trigger: ["blur", "change"],
+          },
+        ],
+        schooltime: [
+          {
+            required: true,
+            message: "活动时间必须输入",
+            trigger: ["blur", "change"],
+          },
+        ],
+        schoolprincipal: [
+          {
+            required: true,
+            message: "活动负责人必须输入",
             trigger: ["blur", "change"],
           },
         ],
